@@ -10,10 +10,17 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var twoFingersSwipeView: TwoFingersSwipeGestureRecognizeView!
+    @IBOutlet weak var swipeFromScrollView: SwipeTrackingFromScrollView!
+    @IBOutlet weak var threeFingersSwipeView: ThreeFingersSwipeGestureRecognizeView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        twoFingersSwipeView.delegate = self
+        swipeFromScrollView.delegate = self
+        threeFingersSwipeView.delegate = self
     }
 
     override var representedObject: AnyObject? {
@@ -21,7 +28,40 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-
 }
 
+extension ViewController: TwoFingersSwipeGestureRecognizeViewDelegate {
+
+    func hanldeSwipeWithTwoFingers(delta: CGPoint) {
+        print("Two fingers swipe \(delta.direction) (\(delta.description)).")
+    }
+}
+
+extension ViewController: SwipeTrackingFromScrollViewDelegate {
+    
+    func hanldeSwipeTrackingFromScrollEvent(delta: CGPoint) {
+        print("Swipe from scroll \(delta.direction) (\(delta.description)).")
+    }
+}
+
+extension ViewController: ThreeFingersSwipeGestureRecognizeViewDelegate {
+
+    func hanldeSwipeWithThreeFingers(delta: CGPoint) {
+        print("Three fingers swipe \(delta.direction) (\(delta.description)).")
+    }
+}
+
+extension CGPoint {
+
+    var direction: String {
+        if abs(x) > abs(y) {
+            return x > 0 ? "right" : "left"
+        } else {
+            return y > 0 ? "up" : "down"
+        }
+    }
+
+    var description: String {
+        return "x: \(x), y: \(y)"
+    }
+}
