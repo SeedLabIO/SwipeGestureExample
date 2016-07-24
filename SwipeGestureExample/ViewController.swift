@@ -13,6 +13,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var twoFingersSwipeView: TwoFingersSwipeGestureRecognizeView!
     @IBOutlet weak var swipeFromScrollView: SwipeTrackingFromScrollView!
     @IBOutlet weak var threeFingersSwipeView: ThreeFingersSwipeGestureRecognizeView!
+    @IBOutlet weak var panGestureView: PanGestureRecognizeView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class ViewController: NSViewController {
         twoFingersSwipeView.delegate = self
         swipeFromScrollView.delegate = self
         threeFingersSwipeView.delegate = self
+        panGestureView.delegate = self
     }
 
     override var representedObject: AnyObject? {
@@ -48,6 +50,13 @@ extension ViewController: ThreeFingersSwipeGestureRecognizeViewDelegate {
 
     func hanldeSwipeWithThreeFingers(delta: CGPoint) {
         print("Three fingers swipe \(delta.direction) (\(delta.description)).")
+    }
+}
+
+extension ViewController: PanGestureRecognizeViewDelegate {
+
+    func handlePanGestureRecognized(delta: CGPoint) {
+        print("Pan gesture recognized \(delta.direction) (\(delta.description)).")
     }
 }
 

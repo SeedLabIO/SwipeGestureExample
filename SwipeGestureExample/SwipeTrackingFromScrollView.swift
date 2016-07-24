@@ -33,17 +33,15 @@ class SwipeTrackingFromScrollView: CustomView {
 
         theEvent.trackSwipeEventWithOptions(
             .LockDirection,
-            dampenAmountThresholdMin: 0,
-            max: 0) { (gestureAmount, phase, complete, stop) in
+            dampenAmountThresholdMin: 1,
+            max: 1) { (gestureAmount, phase, complete, stop) in
 
             if animationCancelled {
                 stop.initialize(true)
             }
 
             if (phase == .Began) { }
-            if (phase == .Ended) {
-                self.delegate?.hanldeSwipeTrackingFromScrollEvent(CGPointMake(theEvent.scrollingDeltaX, theEvent.scrollingDeltaY))
-            } else if (phase == .Cancelled) {
+            if (phase == .Ended || phase == .Cancelled) {
                 self.delegate?.hanldeSwipeTrackingFromScrollEvent(CGPointMake(theEvent.scrollingDeltaX, theEvent.scrollingDeltaY))
                 animationCancelled = true
             }
